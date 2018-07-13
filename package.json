@@ -1,0 +1,39 @@
+{
+  "name": "ejs-scss-ts-boilerplate",
+  "version": "1.0.0",
+  "description": "Boilerplate for creating a simple website using EJS, Sass, and Typescript.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "tslint --project tsconfig.json --config tslint.json 'src/ts/**/*.ts'",
+    "build": "webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaelgira23/ejs-scss-ts-boilerplate.git"
+  },
+  "keywords": [
+    "ejs",
+    "scss",
+    "sass",
+    "ts",
+    "typescript",
+    "boilerplate"
+  ],
+  "author": "Michael Gira",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/michaelgira23/ejs-scss-ts-boilerplate/issues"
+  },
+  "homepage": "https://github.com/michaelgira23/ejs-scss-ts-boilerplate#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "ts-loader": "^4.4.2",
+    "tslint": "^5.10.0",
+    "typescript": "^2.9.2",
+    "webpack": "^4.16.0",
+    "webpack-cli": "^3.0.8"
+  }
+}
