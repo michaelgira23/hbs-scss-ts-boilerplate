@@ -16,8 +16,8 @@ app.use(express.static(path.join(__dirname, 'dist')));
 for (const url of Object.keys(config.routes)) {
 	app.get(url, (_, res) => serve(res, config.routes[url]));
 }
-if (config[404]) {
-	app.use((_, res, __) => serve(res, config[404], 404));
+if (typeof config[404] === 'string') {
+	app.use((_, res, __) => serve(res, config[404] as string, 404));
 }
 
 app.listen(config.port, () => console.log(`Server is listening on *:${config.port}`));
