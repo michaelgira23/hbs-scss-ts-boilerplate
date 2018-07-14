@@ -14,27 +14,31 @@ const pages = getPages();
 const htmlWebpackPlugins: HtmlWebpackPlugin[] = [];
 
 const entries: EntryMap = pages.reduce((map, page) => {
-	console.log('entry', map, page);
-	const tsPath = path.join(pagesPath, page, `${page}.ts`);
+	const pagePath = path.join(pagesPath, page);
+
+	const entryPath = path.join(pagePath, 'entry.ts');
+	const ejsPath = path.join(pagePath, `${page}.ejs`);
+	const tsPath = path.join(pagePath, `${page}.ts`);
+
 	if (fs.existsSync(tsPath)) {
-		map[page] = tsPath;
+		map[page] = entryPath;
 		htmlWebpackPlugins.push(
 			new HtmlWebpackPlugin({
-				chunks: [page],
-				filename: `${page}.html`
+				filename: `${page}.html`,
+				// template: `!!ejs-html-loader!${ejsPath}`,
+				template: ejsPath
+				// inject: false
 			})
 		);
 	}
 	return map;
 }, {} as EntryMap);
 
-console.log('entries', entries);
-
 const config: webpack.Configuration = {
 	mode: 'development',
 	entry: entries,
 	output: {
-		filename: '[name].[chunkhash].js'
+		filename: 'js/[name].[chunkhash].js'
 	},
 	resolve: {
 		// Add `.ts` and `.tsx` as a resolvable extension.
@@ -44,10 +48,11 @@ const config: webpack.Configuration = {
 		rules: [
 			{
 				test: /\.ejs$/,
-				loader: 'ejs-html-loader',
-				include: [
-					path.join(__dirname, 'src')
-				]
+				// loader: 'ejs-html-loader'
+				loader: 'ejs-loader'
+				// include: [
+				// 	path.join(__dirname, 'src')
+				// ]
 			},
 			{
 				test: /\.tsx?$/,
@@ -60,7 +65,7 @@ const config: webpack.Configuration = {
 		// 	_: 'lodash'
 		// }),
 		// new CleanWebpackPlugin(['dist']),
-		new webpack.HashedModuleIdsPlugin(),
+		// new webpack.HashedModuleIdsPlugin(),
 		// new HtmlWebpackPlugin({
 		// 	// template: '!!ejs-html-loader!index.ejs'
 		// 	title: 'testies'
