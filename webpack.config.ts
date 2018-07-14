@@ -1,6 +1,7 @@
 // import * as CleanWebpackPlugin from 'clean-webpack-plugin';
 import * as fs from 'fs';
 import * as HtmlWebpackPlugin from 'html-webpack-plugin';
+import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import * as path from 'path';
 import * as webpack from 'webpack';
 
@@ -20,7 +21,7 @@ const entries: EntryMap = pages.reduce((map, page) => {
 	const ejsPath = path.join(pagePath, `${page}.ejs`);
 	const tsPath = path.join(pagePath, `${page}.ts`);
 
-	if (fs.existsSync(tsPath)) {
+	if (fs.existsSync(ejsPath)) {
 		map[page] = entryPath;
 		htmlWebpackPlugins.push(
 			new HtmlWebpackPlugin({
@@ -48,29 +49,30 @@ const config: webpack.Configuration = {
 		rules: [
 			{
 				test: /\.ejs$/,
-				// loader: 'ejs-html-loader'
 				loader: 'ejs-loader'
-				// include: [
-				// 	path.join(__dirname, 'src')
-				// ]
 			},
 			{
 				test: /\.tsx?$/,
 				loader: 'ts-loader'
+			},
+			{
+				test: /\.scss$/,
+				use: [
+					MiniCssExtractPlugin.loader,
+					'css-loader',
+					'sass-loader'
+				]
 			}
 		]
 	},
 	plugins: [
-		// new webpack.ProvidePlugin({
-		// 	_: 'lodash'
-		// }),
-		// new CleanWebpackPlugin(['dist']),
-		// new webpack.HashedModuleIdsPlugin(),
-		// new HtmlWebpackPlugin({
-		// 	// template: '!!ejs-html-loader!index.ejs'
-		// 	title: 'testies'
-		// })
-		...htmlWebpackPlugins
+		// new CleanWebpackPlugin(['dist/*']),
+		new webpack.HashedModuleIdsPlugin(),
+		...htmlWebpackPlugins,
+		new MiniCssExtractPlugin({
+			filename: 'css/[name].[chunkhash].css',
+			chunkFilename: 'css/[id].[chunkhash].css'
+		})
 		// new webpack.optimize.CommonsChunkPlugin({
 		// 	name: 'vendor'
 		// }),
