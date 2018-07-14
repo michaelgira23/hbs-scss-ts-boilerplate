@@ -8,9 +8,12 @@
 			<title><%= locals.title %></title>
 		<% } %>
 
+		<link rel="stylesheet" href="../../../node_modules/sanitize.css/sanitize.css">
+		<link rel="stylesheet" href="../../globals.scss">
+
 		<% if (locals.styles) { %>
 			<% for (const style of locals.styles) { %>
-				<link rel="stylesheet" href="<%- style %>"></link>
+				<link rel="stylesheet" href="<%- style %>">
 			<% } %>
 		<% } %>
 	</head>

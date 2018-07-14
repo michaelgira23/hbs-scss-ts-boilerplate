@@ -11,7 +11,7 @@ function serve(res: express.Response, pageName: string, httpCode = 200) {
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
-app.get(`/`, (_, res) => {
+app.get('/', (_, res) => {
 	serve(res, 'home');
 });
 
