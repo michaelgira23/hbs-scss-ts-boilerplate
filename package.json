@@ -2,7 +2,7 @@
   "name": "ejs-scss-ts-boilerplate",
   "version": "1.0.0",
   "description": "Boilerplate for creating a simple website using EJS, Sass, and Typescript.",
-  "main": "server.js",
+  "main": "server.ts",
   "scripts": {
     "start": "run-p watch server:dev",
     "server": "ts-node server.ts",

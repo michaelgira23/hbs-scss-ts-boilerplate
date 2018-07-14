@@ -58,21 +58,26 @@ The web server does not automatically serve every generated page. Instead, you m
 [`/config.ts`](https://github.com/michaelgira23/ejs-scss-ts-boilerplate/blob/master/config.ts)
 ```typescript
 export const config: Config = {
-	// Port number to run the web server on
 	port: 2468,
-	// Routes URLs passed to Express and the corresponding page name
 	routes: {
 		'/': 'home',
 		'/page-1': 'page1'
 	},
-	// Optional 404 page name
-	404: '404'
+	// Either display dedicated 404 page
+	404: '404page',
+	// or redirect to URL
+	redirect404: '/'
 };
 
 export interface Config {
+	// Port number to run the web server on
 	port: number;
+	// Routes URLs passed to Express and the corresponding page name
 	routes: { [url: string]: string };
+	// Optional 404 page name
 	404?: string;
+	// Optional 404 redirect to URL
+	redirect404?: string;
 }
 ```
 

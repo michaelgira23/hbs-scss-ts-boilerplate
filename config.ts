@@ -10,4 +10,5 @@ export interface Config {
 	port: number;
 	routes: { [url: string]: string };
 	404?: string;
+	redirect404?: string;
 }
