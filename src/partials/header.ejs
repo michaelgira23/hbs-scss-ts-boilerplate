@@ -4,6 +4,14 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-		<title>My Cool Website</title>
+		<% if (locals.title) { %>
+			<title><%= locals.title %></title>
+		<% } %>
+
+		<% if (locals.styles) { %>
+			<% for (const style of locals.styles) { %>
+				<link rel="stylesheet" href="<%- style %>"></link>
+			<% } %>
+		<% } %>
 	</head>
 	<body>
