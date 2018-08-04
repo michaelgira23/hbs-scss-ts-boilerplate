@@ -1,3 +1,7 @@
 {
-	"hello": "world"
+  "todo": [
+    "Design website",
+    "Code it",
+    "Deploy it"
+  ]
 }
