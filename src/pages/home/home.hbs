@@ -1,0 +1,23 @@
+---
+title: Home Page
+meta:
+  author: Mr. Cool Guy
+  description: Plans for world domination
+styles:
+  - ./home.scss
+scripts:
+  - ./animation.ts
+---
+
+{{#extend "base"}}
+	{{#content "body"}}
+		<h1>Hello World!</h1>
+		<p>Things I need to do:</p>
+		<ol>
+		<!-- You can access data from the `/src/data` directory -->
+		{{#each example.todo}}
+			<li>{{this}}</li>
+		{{/each}}
+		</ol>
+	{{/content}}
+{{/extend}}

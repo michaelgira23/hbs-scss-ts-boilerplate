@@ -1,9 +1,9 @@
-# EJS Scss TypeScript Boilerplate
+# Handlebars Sass TypeScript Boilerplate
 
-Boilerplate for creating a simple static website using EJS, Sass, and Typescript.
+Boilerplate for creating a simple static website using Handlebars, Sass, and Typescript.
 
-[![Dependency Status](https://img.shields.io/david/michaelgira23/ejs-scss-ts-boilerplate.svg)](https://david-dm.org/michaelgira23/ejs-scss-ts-boilerplate)
-[![Dev Dependency Status](https://img.shields.io/david/dev/michaelgira23/ejs-scss-ts-boilerplate.svg)](https://david-dm.org/michaelgira23/ejs-scss-ts-boilerplate?type=dev)
+[![Dependency Status](https://img.shields.io/david/michaelgira23/hbs-scss-ts-boilerplate.svg)](https://david-dm.org/michaelgira23/hbs-scss-ts-boilerplate)
+[![Dev Dependency Status](https://img.shields.io/david/dev/michaelgira23/hbs-scss-ts-boilerplate.svg)](https://david-dm.org/michaelgira23/hbs-scss-ts-boilerplate?type=dev)
 
 # Installation
 
@@ -22,40 +22,76 @@ This is a basic structure of a page located in `/src/pages`:
 ```
 /pages
 +-- /page1
-    +-- page1.ejs
+    +-- page1.hbs
     +-- page1.scss
     +-- page1.ts
 +-- /page2
-    +-- page2.ejs
+    +-- page2.hbs
     +-- page2.scss
     +-- page2.ts
 +-- ...
 ```
 
-**The EJS page must be the same name as the page directory name.** For example, `page1.ejs` must always be within the `/pages/page1` directory.
+**The Handlebars page must be the same name as the page directory name.** For example, `page1.hbs` must always be within the `/pages/page1` directory.
 
-Here's an example EJS page (also located in [`/src/template.ejs`](https://github.com/michaelgira23/ejs-scss-ts-boilerplate/blob/master/src/template.ejs)):
+Here's an example Handlebars page (also located in [`/src/template.hbs`](https://github.com/michaelgira23/hbs-scss-ts-boilerplate/blob/master/src/template.hbs)):
 
-```html
-<%- include('../../partials/header', { title: 'Browser Title', styles: ['./your', './styles.scss'] }) -%>
+```handlebars
+---
+title: Browser Title
+meta:
+  author: HTML meta author
+  description: HTML meta description
+  any other: meta you want
+styles:
+  - ./your
+  - ./styles.scss
+scripts:
+  - ./your-cool-script.ts
+---
 
-<!-- Your content goes here -->
-
-<script src="./your-cool-script.ts"></script>
-<%- include('../../partials/footer') -%>
+{{#extend "base"}}
+	{{#content "body"}}
+		<!-- Your content goes here -->
+	{{/content}}
+{{/extend}}
 ```
 
-Including the `header` and `footer` partials are a convenient way reuse code such as browser `<head>` tags.
+At the top of the page, you can optionally have Yaml which is passed into the template. The base layout supports a `title`, `meta`, `styles`, and `scripts` variable, which will insert values into their respective part of the template. More information about templating can be found in the [`parcel-plugin-handlebars` README](https://github.com/robbiedigital/parcel-plugin-handlebars).
 
-While including the header partial, you can optionally pass in a few parameters:
-- `title` - A string to set the browser's `<title>`
-- `styles` - An array of strings of paths pointing to your Sass stylings (relative to the current EJS file).
+# Data in Template
+
+You can stick JSON files in the `/src/data` directory and access these data within all the templates. For example:
+
+In data:
+
+```javascript
+// src/data/example.json
+{
+	"todo": [
+		"Design website",
+		"Code it",
+		"Deploy it"
+	]
+}
+```
+
+In template:
+
+```html
+<p>Things I need to do:</p>
+<ol>
+{{#each example.todo}}
+	<li>{{this}}</li>
+{{/each}}
+</ol>
+```
 
 # Configuration
 
 The web server does not automatically serve every generated page. Instead, you must add parameters to the config.
 
-[`/config.ts`](https://github.com/michaelgira23/ejs-scss-ts-boilerplate/blob/master/config.ts)
+[`/config.ts`](https://github.com/michaelgira23/hbs-scss-ts-boilerplate/blob/master/config.ts)
 ```typescript
 export const config: Config = {
 	port: 2468,
@@ -84,7 +120,7 @@ export interface Config {
 # Running
 
 `npm start` - Watches for file changes and spins up web server
-_(Note: Many times Parcel cannot detect included EJS partial changes, requiring you to re-`npm start` when changing header or footer.)_
+_(Note: Many times Parcel cannot detect included Handlebar partial changes, requiring you to re-`npm start` when changing the base layout.)_
 
 `npm run build` - Builds files for production in the `/dist` directory.
 
@@ -96,4 +132,4 @@ _(Note: Many times Parcel cannot detect included EJS partial changes, requiring 
 
 # Contributing
 
-Found a bug? Think there's additional functionality that should be added? [Open up an issue!](https://github.com/michaelgira23/ejs-scss-ts-boilerplate/issues/new)
+Found a bug? Think there's additional functionality that should be added? [Open up an issue!](https://github.com/michaelgira23/hbs-scss-ts-boilerplate/issues/new)
